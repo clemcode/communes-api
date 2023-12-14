@@ -1,17 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <script type="module" src="./index.js" defer></script>
-        <title>Document</title>
-    </head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="./index.js" defer></script>
+    <title>Document</title>
+    <style>
+      .card {
+        display: flex;
+        flex-direction: column;
+        border-radius: 0.5rem;
+        box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+        margin: 1rem 0;
+        padding: 1rem;
+      }
+      .card > h2 {
+        font-size: 2rem;
+        font-weight: bold;
+        text-transform: bold;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
 
-    <body>
-        <div id="app">
-            <input type="search" id="town" />
-            <ul id="townList"></ul>
-        </div>
-        <div id="townInformation"></div>
-    </body>
+  <body>
+    <div id="app">
+      <h1>Chercher une ville en France 🍗</h1>
+      <input type="search" id="town" placeholder="tape une ville "/>
+      <ul id="townList"></ul>
+    </div>
+    <div id="townInformation"></div>
+  </body>
 </html>

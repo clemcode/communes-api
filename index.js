@@ -1,3 +1,4 @@
+// @ts-nocheck
 const apiUrl = "https://geo.api.gouv.fr/communes?limit=15&nom="
 
 const townInput = document.getElementById("town")
@@ -12,6 +13,7 @@ async function getTown(name) {
 let timeOut
 townInput.addEventListener("input", async (event) => {
     if (event.target.value.length === 0) {
+        townList.innerHTML = ""
     }
     if (event.target.value.length < 2) {
         return
@@ -36,14 +38,18 @@ townInput.addEventListener("input", async (event) => {
 })
 
 function showInfo(town) {
-    const pName = document.createElement("p")
+    townInfo.innerHTML = ""
+    const card = document.createElement("div")
+    card.classList.add("card")
+    const pName = document.createElement("h2")
     const pCodeDepartement = document.createElement("p")
     const pPopulation = document.createElement("p")
     pName.textContent = town.nom
     pCodeDepartement.textContent = town.codeDepartement
     pPopulation.textContent = town.population
-    townInfo.appendChild(pName)
-    townInfo.appendChild(pCodeDepartement)
-    townInfo.appendChild(pPopulation)
+    card.appendChild(pName)
+    card.appendChild(pCodeDepartement)
+    card.appendChild(pPopulation)
+    townInfo.appendChild(card)
     townInput.value = town.nom
 }
