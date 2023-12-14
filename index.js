@@ -1,39 +1,49 @@
-const apiUrl = "https://geo.api.gouv.fr/communes?nom="
+const apiUrl = "https://geo.api.gouv.fr/communes?limit=15&nom="
 
-const townInput = document.getElementById('town');
-const sendButton = document.getElementById('send');
-const townInfo = document.getElementById('townInformation');
-const townList = document.getElementById('townList');
+const townInput = document.getElementById("town")
+const townInfo = document.getElementById("townInformation")
+const townList = document.getElementById("townList")
 
 async function getTown(name) {
-    const response = await fetch(apiUrl + name);
-    const data = await response.json();
-    return data
+    const response = await fetch(apiUrl + name)
+    return response.json()
 }
 
-sendButton.addEventListener('click', async () => {
-    const townData = await getTown(townInput.value)
-    const nom = document.createElement('p');
-    const codeDepartement = document.createElement('p');
-    const population = document.createElement('p');
-
-    townData.forEach((town, index) => {
-        const liNom = document.createElement('li');
-        const aNom = document.createElement('a');
-        aNom.textContent = town.nom
-        aNom.href = '#' + town.nom
-        aNom.addEventListener('click', (event)=> showInfo(event.target.textContent))
-        liNom.append(aNom)
-        townList.append(liNom)
-    });
-
-    function showInfo(town) {
-        const nomTown = townData.find((element) => element.nom === town)
-        nom.textContent = nomTown.nom
-        codeDepartement.textContent = nomTown.codeDepartement
-        population.textContent = nomTown.population
-        townInfo.appendChild(nom)
-        townInfo.appendChild(codeDepartement)
-        townInfo.appendChild(population)
+let timeOut
+townInput.addEventListener("input", async (event) => {
+    if (event.target.value.length === 0) {
     }
-});
+    if (event.target.value.length < 2) {
+        return
+    }
+    clearTimeout(timeOut)
+    timeOut = setTimeout(async () => {
+        const townData = await getTown(townInput.value)
+        townList.innerHTML = ""
+        townData.forEach((town) => {
+            const liName = document.createElement("li")
+            const aName = document.createElement("a")
+            aName.textContent = town.nom
+            const selectedTown = townData.find(
+                (element) => element.siren === town.siren
+            )
+            aName.href = "#" + town.nom
+            aName.addEventListener("click", () => showInfo(selectedTown))
+            liName.append(aName)
+            townList.append(liName)
+        })
+    }, 444)
+})
+
+function showInfo(town) {
+    const pName = document.createElement("p")
+    const pCodeDepartement = document.createElement("p")
+    const pPopulation = document.createElement("p")
+    pName.textContent = town.nom
+    pCodeDepartement.textContent = town.codeDepartement
+    pPopulation.textContent = town.population
+    townInfo.appendChild(pName)
+    townInfo.appendChild(pCodeDepartement)
+    townInfo.appendChild(pPopulation)
+    townInput.value = town.nom
+}
