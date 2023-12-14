@@ -1,0 +1,1 @@
+apiUrl = "https://geo.api.gouv.fr/communes?nom="
