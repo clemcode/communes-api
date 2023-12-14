@@ -25,7 +25,7 @@ townInput.addEventListener("input", async (event) => {
         townData.forEach((town) => {
             const liName = document.createElement("li")
             const aName = document.createElement("a")
-            aName.textContent = town.nom
+            aName.textContent = `${town.nom} - ${town.codeDepartement}`
             const selectedTown = townData.find(
                 (element) => element.siren === town.siren
             )
@@ -45,8 +45,8 @@ function showInfo(town) {
     const pCodeDepartement = document.createElement("p")
     const pPopulation = document.createElement("p")
     pName.textContent = town.nom
-    pCodeDepartement.textContent = town.codeDepartement
-    pPopulation.textContent = town.population
+    pCodeDepartement.textContent = `Code : ${town.codeDepartement}`
+    pPopulation.textContent = `Nb d'habitants : ${town.population}`
     card.appendChild(pName)
     card.appendChild(pCodeDepartement)
     card.appendChild(pPopulation)
